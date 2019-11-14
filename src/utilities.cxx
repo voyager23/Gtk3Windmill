@@ -26,6 +26,12 @@
 
 void set_static_points(std::vector<Point>& points) {
 	
+	points.push_back(Point{240,450});	
+	points.push_back(Point{176,28});
+	points.push_back(Point{76,171});
+	points.push_back(Point{479,248});
+	points.push_back(Point{284,368});
+		
 }
 
 

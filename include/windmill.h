@@ -34,6 +34,7 @@
 	#include <algorithm>
 	#include <vector>
 	#include <algorithm>
+	#include <unordered_map>
 	
 	#include <gtk/gtk.h>
 		
@@ -53,6 +54,10 @@
 		double radians;
 		bool used;
 	} Edge;
+	
+	typedef std::vector<Edge> Edges;
+	
+	typedef std::unordered_map<Point, Edges> EdgeMap;
 	
 // Function declarations
 

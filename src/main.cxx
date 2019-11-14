@@ -28,7 +28,22 @@ int main(int argc, char **argv)
 {
 	std::vector<Point> points;
 	
+	// init the data
 	set_static_points(points);
+	
+	// for each point
+	//		construct a vector of edges. (Edges);
+	//		add vector to unordered_map using 'from' as key and vector as value
+	
+	for(auto from = points.begin(); from != points.end(); ++from) {
+		Edges *ev = new Edges;
+		for(auto to = points.begin(); to != points.end(); ++to) {
+			if(to == from) continue;
+			
+			
+		}
+	}
+			
 	
 	return 0;
 }
