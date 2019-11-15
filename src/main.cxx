@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 	VectorPointEdge vect_point_edges;	// vector of std::pair<Point, Edges>
 	VectorPointTrajectory vect_point_trajectories;
 	double current_rotation;
+	Point pivot;
 	
 	// init the data
 	set_static_points(points);
@@ -64,15 +65,19 @@ int main(int argc, char **argv)
 	
 	// Using each entry in vect_point_edges as starting point
 	for(auto start = vect_point_edges.begin(); start != vect_point_edges.end(); ++start) { // Trajectories loop
+		
 		// clear all 'used' values to false
 		for(auto x = vect_point_edges.begin(); x != vect_point_edges.end(); ++x) {
 			Edges ev = (*x).second;
 			for(auto y = ev.begin(); y != ev.end(); ++y) y->used = false;
 		}
+		
 		// Establish a new trajectory for the starting point
 		Trajectory *t = new Trajectory;	// vector of Edge
 		// calculate the trajectory
 		current_rotation = 0.0;
+		pivot = (*start).first;
+		
 		// push trajectory to vect_point_trajectories
 		
 	} // Trajectories loop
