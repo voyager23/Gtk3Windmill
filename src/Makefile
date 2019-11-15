@@ -3,7 +3,7 @@
 .PHONY : run
 
 CC = g++
-CFLAGS = -g -Wfatal-errors -std=c++11
+CFLAGS = -g -Wfatal-errors -std=c++14
 CFLAGS += `pkg-config --cflags gtk+-3.0 gdk-3.0`
 
 LIBS = `pkg-config --libs gtk+-3.0 gdk-3.0`
@@ -21,10 +21,10 @@ OUT = ../build/$@
 #-----------------------------------------------------------------------
 	
 $(TARGET) : $(OBJS) $(HDRS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o ../bin/$(TARGET)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o ../bin/$(TARGET)
 	
 ../build/main.o : main.cxx ../include/windmill.h
-	$(CC) -c $(CFLAGS) $(LIBS) $< -o $(OUT)
+	@$(CC) -c $(CFLAGS) $(LIBS) $< -o $(OUT)
 
 ../build/utilities.o : utilities.cxx ../include/windmill.h
-	$(CC) -c $(CFLAGS) $(LIBS) $< -o $(OUT)
+	@$(CC) -c $(CFLAGS) $(LIBS) $< -o $(OUT)

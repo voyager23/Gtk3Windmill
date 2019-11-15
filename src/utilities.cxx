@@ -24,6 +24,39 @@
 
 #include "../include/windmill.h"
 
+void prt_point(Point *pp, bool nl) {
+	// print contents of Point struct. Add NEWLINE if nl==true
+	std::cout << "(" << pp->x << "," << pp->y << ")";
+	(nl) ? std::cout << std::endl : std::cout << "\t"; 
+}
+
+void prt_edge(Edge *ep, bool nl) {
+	// print contents of Edge structure. Add NEWINE if nl==true
+	prt_point( &((*ep).from), false);
+	prt_point( &((*ep).to), false);
+	// gradient, radians, used
+	std::cout << "\tGradient: " << (*ep).gradient << " ";
+	std::cout << "Radians: " << (*ep).radians << " ";
+	(*ep).used ? std::cout << "Used" : std::cout << "Not Used";
+	if (nl) {
+		NL;
+	} else {
+		
+	}
+}
+
+void prt_pair_vector(PairVector *ppv, bool nl) {
+	std::cout << "PairVector contains:" << std::endl;
+	for(auto x = (*ppv).begin(); x != (*ppv).end(); ++x) {
+		prt_point(&((*x).first), true);
+		Edges t = ((*x).second); //vector of Edge
+		for(auto y = t.begin(); y != t.end(); ++y)
+			prt_edge(&(*y), true);
+		NL;
+	}
+	if(nl) NL;
+}
+
 void set_static_points(std::vector<Point>& points) {
 	
 	points.push_back(Point{240,450});	

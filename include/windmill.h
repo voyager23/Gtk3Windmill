@@ -34,9 +34,11 @@
 	#include <algorithm>
 	#include <vector>
 	#include <algorithm>
-	#include <unordered_map>
+	#include <utility>
 	
 	#include <gtk/gtk.h>
+	
+	#define NL {std::cout<<std::endl;}
 		
 	const int N = 5;	// Number of points
 	const int Nseg = N * (N-1) / 2;		// Number of pairs
@@ -55,11 +57,16 @@
 		bool used;
 	} Edge;
 	
+	typedef std::vector<Point> Points;
 	typedef std::vector<Edge> Edges;
-	
-	typedef std::unordered_map<Point, Edges> EdgeMap;
+	typedef std::vector<Edge> Trajectory;
+	typedef std::pair<Point, Edges> PairPointEdge;
+	typedef std::vector<PairPointEdge> PairVector;
 	
 // Function declarations
+	void prt_point(Point*, bool);
+	void prt_edge(Edge*, bool);
+	void prt_pair_vector(PairVector*, bool);
 
 	void set_static_points(std::vector<Point>&);
 

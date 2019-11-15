@@ -26,7 +26,9 @@
 
 int main(int argc, char **argv)
 {
-	std::vector<Point> points;
+	Points points;
+	PairVector vect_pair_point_edge;	// vector of std::pair<Point, Edges>
+	
 	
 	// init the data
 	set_static_points(points);
@@ -39,11 +41,22 @@ int main(int argc, char **argv)
 		Edges *ev = new Edges;
 		for(auto to = points.begin(); to != points.end(); ++to) {
 			if(to == from) continue;
-			
-			
+			// construct a new edge
+			Edge e;
+			e.from = *from;
+			e.to = *to;
+			e.gradient = 0.0;
+			e.radians = 0.0;
+			e.used = false;
+			// add to edge vector ev
+			(*ev).push_back(e);
 		}
+		// add edge vector to map using from as key and edge vector as value
+		PairPointEdge pair = std::make_pair(*from,*ev);
+		vect_pair_point_edge.push_back(pair);
 	}
-			
+	
+	prt_pair_vector(&vect_pair_point_edge, true);
 	
 	return 0;
 }
