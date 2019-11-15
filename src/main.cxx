@@ -27,8 +27,9 @@
 int main(int argc, char **argv)
 {
 	Points points;
-	PairVector vect_pair_point_edge;	// vector of std::pair<Point, Edges>
-	
+	VectorPointEdge vect_point_edges;	// vector of std::pair<Point, Edges>
+	VectorPointTrajectory vect_point_trajectories;
+	double current_rotation;
 	
 	// init the data
 	set_static_points(points);
@@ -42,18 +43,43 @@ int main(int argc, char **argv)
 			Edge e;
 			e.from = *from;
 			e.to = *to;
-			e.gradient = 0.0;
-			e.radians = 0.0;
+			e.gradient = (to->y - from->y) / (to->x - from->x);
+			e.radians = atan(e.gradient);
+			if (e.radians < 0.0) e.radians += M_PI;
 			e.used = false;
+
 			// add to edge vector ev
 			(*ev).push_back(e);
 		}
+		// sort the vector on ascending radian values
+		std::sort((*ev).begin(), (*ev).end(), compare_radians);
 		// add edge vector to map using from as key and edge vector as value
-		PairPointEdge pair = std::make_pair(*from,*ev);
-		vect_pair_point_edge.push_back(pair);
+		PointEdges pair = std::make_pair(*from,*ev);
+		vect_point_edges.push_back(pair);
 	}
 	
-	prt_pair_vector(&vect_pair_point_edge, true);
+	// Debug printout
+	prt_pair_vector(&vect_point_edges, true);
+	// ----- --------
+	
+	// Using each entry in vect_point_edges as starting point
+	for(auto start = vect_point_edges.begin(); start != vect_point_edges.end(); ++start) { // Trajectories loop
+		// clear all 'used' values to false
+		for(auto x = vect_point_edges.begin(); x != vect_point_edges.end(); ++x) {
+			Edges ev = (*x).second;
+			for(auto y = ev.begin(); y != ev.end(); ++y) y->used = false;
+		}
+		// Establish a new trajectory for the starting point
+		Trajectory *t = new Trajectory;	// vector of Edge
+		// calculate the trajectory
+		current_rotation = 0.0;
+		// push trajectory to vect_point_trajectories
+		
+	} // Trajectories loop
+	
+	// Animate/Display each trajectory
+	
+	// Cleanup code - free memory
 	
 	return 0;
 }

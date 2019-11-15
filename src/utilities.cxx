@@ -45,7 +45,7 @@ void prt_edge(Edge *ep, bool nl) {
 	}
 }
 
-void prt_pair_vector(PairVector *ppv, bool nl) {
+void prt_pair_vector(VectorPointEdge *ppv, bool nl) {
 	std::cout << "PairVector contains:" << std::endl;
 	for(auto x = (*ppv).begin(); x != (*ppv).end(); ++x) {
 		prt_point(&((*x).first), true);
@@ -66,5 +66,11 @@ void set_static_points(std::vector<Point>& points) {
 	points.push_back(Point{284,368});
 		
 }
+
+int compare_radians(Edge& a,Edge& b) {
+	return(a.radians < b.radians);
+}
+
+
 
 
