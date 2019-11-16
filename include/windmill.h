@@ -59,11 +59,11 @@
 	
 	typedef std::vector<Point> Points;
 	typedef std::vector<Edge> Edges;
-	typedef std::vector<Edge> Trajectory;
+	
 	typedef std::pair<Point, Edges> PointEdges;
-	typedef std::pair<Point, Trajectory> PointTrajectories;
 	typedef std::vector<PointEdges> VectorPointEdge;
-	typedef std::vector<PointTrajectories> VectorPointTrajectory;
+	
+	typedef std::vector<std::pair<Point,Point>> Trajectory;
 	
 // Function declarations
 	void prt_point(Point*, bool);
@@ -72,6 +72,7 @@
 
 	void set_static_points(std::vector<Point>&);
 	int compare_radians(Edge&,Edge&);
+	int compare_points(Point&,Point&);
 
 #endif
 

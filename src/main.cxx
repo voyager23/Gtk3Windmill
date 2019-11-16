@@ -28,8 +28,15 @@ int main(int argc, char **argv)
 {
 	Points points;
 	VectorPointEdge vect_point_edges;	// vector of std::pair<Point, Edges>
-	VectorPointTrajectory vect_point_trajectories;
+	VectorPointEdge::iterator pivot_select;
+	
+	Edges::iterator target_select;
+	
+	Trajectory trajectory;
 	double current_rotation;
+	
+	Point test_point = {76,171};	//debug value
+	Point pivot, target;
 	
 	// init the data
 	set_static_points(points);
@@ -63,19 +70,45 @@ int main(int argc, char **argv)
 	// ----- --------
 	
 	// Using each entry in vect_point_edges as starting point
-	for(auto start = vect_point_edges.begin(); start != vect_point_edges.end(); ++start) { // Trajectories loop
+	for(auto start = vect_point_edges.begin(); start != vect_point_edges.end(); ++start) { // Trajectories loop		
+		// DEBUG SELECT (76,171)
+		if (compare_points( (*start).first, test_point) == 0) continue;
+
+		trajectory.clear();
+		current_rotation = 0.0;
 		// clear all 'used' values to false
 		for(auto x = vect_point_edges.begin(); x != vect_point_edges.end(); ++x) {
 			Edges ev = (*x).second;
 			for(auto y = ev.begin(); y != ev.end(); ++y) y->used = false;
 		}
-		// Establish a new trajectory for the starting point
-		Trajectory *t = new Trajectory;	// vector of Edge
-		// calculate the trajectory
-		current_rotation = 0.0;
-		// push trajectory to vect_point_trajectories
-		
+		while(1) {
+			// find pivot
+			for(pivot_select = vect_point_edges.begin(); pivot_select != vect_point_edges.end(); ++pivot_select) 
+				if(compare_points( (*pivot_select).first, test_point) == 1) break;
+			if(pivot_select == vect_point_edges.end()) {
+				std::cout << "Error: Initial pivot not found.";
+				NL;
+				exit(1);
+			}
+			// test the last value of radians in the edges vector
+			target_select = (((*pivot_select).second).end()) - 1;
+			// reset current_rotation if necessary
+			if(current_rotation >= (*target_select).radians) current_rotation = 0.0;
+			target_select = ((*pivot_select).second).begin();
+			while(current_rotation > (*target_select).radians) ++target_select;
+			if((*target_select).used == true) break; // breakout while loop
+			pivot = (*target_select).from;
+			target = (*target_select).to;
+			(*target_select).used = true;
+			// add these values to trajectories
+			trajectory.push_back(std::make_pair(pivot,target));
+			pivot = target;
+		}
+
 	} // Trajectories loop
+	
+	std::cout << "trajectory has " << trajectory.size() << " entries";
+	NL;
 	
 	// Animate/Display each trajectory
 	

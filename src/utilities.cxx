@@ -71,6 +71,11 @@ int compare_radians(Edge& a,Edge& b) {
 	return(a.radians < b.radians);
 }
 
+int compare_points(Point& a,Point& b) {
+	// return 1 if point are equal else return zero;
+	return ((a.x == b.x)&&(a.y == b.y));
+}
+
 
 
 
