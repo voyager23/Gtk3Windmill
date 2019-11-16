@@ -70,17 +70,20 @@ int main(int argc, char **argv)
 	// ----- --------
 	
 	// Using each entry in vect_point_edges as starting point
+
 	for(auto start = vect_point_edges.begin(); start != vect_point_edges.end(); ++start) { // Trajectories loop		
 		// DEBUG SELECT (76,171)
 		if (compare_points( (*start).first, test_point) == 0) continue;
 
 		trajectory.clear();
 		current_rotation = 0.0;
+
 		// clear all 'used' values to false
 		for(auto x = vect_point_edges.begin(); x != vect_point_edges.end(); ++x) {
 			Edges ev = (*x).second;
 			for(auto y = ev.begin(); y != ev.end(); ++y) y->used = false;
 		}
+
 		while(1) {
 			// find pivot
 			for(pivot_select = vect_point_edges.begin(); pivot_select != vect_point_edges.end(); ++pivot_select) 
@@ -104,6 +107,7 @@ int main(int argc, char **argv)
 			trajectory.push_back(std::make_pair(pivot,target));
 			pivot = target;
 		}
+
 
 	} // Trajectories loop
 	
