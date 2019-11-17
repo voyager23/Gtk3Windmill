@@ -37,7 +37,7 @@ void prt_edge(Edge *ep, bool nl) {
 	// gradient, radians, used
 	std::cout << "\tGradient: " << (*ep).gradient << " ";
 	std::cout << "Radians: " << (*ep).radians << " ";
-	(*ep).used ? std::cout << "Used" : std::cout << "Not_Used";
+	((*ep).used != 0) ? std::cout << "Used" : std::cout << "Not_Used";
 	if (nl) {
 		NL;
 	} else {

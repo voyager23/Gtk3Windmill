@@ -54,7 +54,7 @@
 		Point to;
 		double gradient;
 		double radians;
-		bool used;
+		int used;
 	} Edge;
 	
 	typedef std::vector<Point> Points;

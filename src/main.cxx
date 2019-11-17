@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 	Trajectory trajectory;
 	double current_rotation;
 	
-	Point test_point = {76,171};	//debug value
+	Point test_point = {176,28};	//debug value
 	Point pivot, target;
 	
 	// init the data
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 			e.gradient = (to->y - from->y) / (to->x - from->x);
 			e.radians = atan(e.gradient);
 			if (e.radians < 0.0) e.radians += M_PI;
-			e.used = false;
+			e.used = 0;
 
 			// add to edge vector ev
 			(*ev).push_back(e);
@@ -78,18 +78,26 @@ int main(int argc, char **argv)
 		// pivot = test_point;
 		// END DEBUG
 		
-
-
-		trajectory.clear();
-		current_rotation = 0.0;
+		pivot = (*start).first;
 
 		// clear all 'used' values to false
 		for(auto x = vect_point_edges.begin(); x != vect_point_edges.end(); ++x) {
+			std::cout << "Clearing -used- values\n";
 			Edges ev = (*x).second;
-			for(auto y = ev.begin(); y != ev.end(); ++y) y->used = false;
+			for(auto y = ev.begin(); y != ev.end(); ++y) {
+				//prt_edge(&(*y),true);
+				(*y).used = 0;
+				//prt_edge(&(*y),true);
+				//NL;
+			}
 		}
 		
-		pivot = (*start).first;
+		trajectory.clear();
+		current_rotation = 0.0;
+		
+		// debug check of all edges
+		
+
 		while(1) {
 			// find pivot
 			for(pivot_select = vect_point_edges.begin(); pivot_select != vect_point_edges.end(); ++pivot_select) 
@@ -103,12 +111,19 @@ int main(int argc, char **argv)
 			target_select = (((*pivot_select).second).end()) - 1;
 			// reset current_rotation if necessary
 			if(current_rotation >= (*target_select).radians) current_rotation = 0.0;
+			
 			target_select = ((*pivot_select).second).begin();
 			while(current_rotation > (*target_select).radians) ++target_select;
-			if((*target_select).used == true) break; // breakout while loop
+			if((*target_select).used != 0) {
+				prt_point(&((*target_select).from), false);
+				prt_point(&((*target_select).to), false);
+				std::cout << " Used " << (*target_select).used << std::endl;
+				break; // breakout while loop
+			}
+			
 			pivot = (*target_select).from;
 			target = (*target_select).to;
-			(*target_select).used = true;
+			(*target_select).used = 99;
 			// add these values to trajectories
 			trajectory.push_back(std::make_pair(pivot,target));
 			current_rotation = (*target_select).radians + 0.00001;
@@ -121,9 +136,9 @@ int main(int argc, char **argv)
 			prt_point(&((*x).second), true);
 			NL;
 		}
-		NL;
 	
-	std::cout << "trajectory has " << trajectory.size() << " entries";
+	std::cout << "Trajectory has " << trajectory.size() << " entries";
+	NL;
 	NL;
 
 	} // Trajectories loop
