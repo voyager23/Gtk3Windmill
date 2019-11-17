@@ -71,9 +71,14 @@ int main(int argc, char **argv)
 	
 	// Using each entry in vect_point_edges as starting point
 
-	for(auto start = vect_point_edges.begin(); start != vect_point_edges.end(); ++start) { // Trajectories loop		
+	for(auto start = vect_point_edges.begin(); start != vect_point_edges.end(); ++start) { // Trajectories loop
+				
 		// DEBUG SELECT (76,171)
-		if (compare_points( (*start).first, test_point) == 0) continue;
+		// if (compare_points( (*start).first, test_point) == 0) continue;
+		// pivot = test_point;
+		// END DEBUG
+		
+
 
 		trajectory.clear();
 		current_rotation = 0.0;
@@ -83,11 +88,12 @@ int main(int argc, char **argv)
 			Edges ev = (*x).second;
 			for(auto y = ev.begin(); y != ev.end(); ++y) y->used = false;
 		}
-
+		
+		pivot = (*start).first;
 		while(1) {
 			// find pivot
 			for(pivot_select = vect_point_edges.begin(); pivot_select != vect_point_edges.end(); ++pivot_select) 
-				if(compare_points( (*pivot_select).first, test_point) == 1) break;
+				if(compare_points( (*pivot_select).first, pivot) == 1) break;
 			if(pivot_select == vect_point_edges.end()) {
 				std::cout << "Error: Initial pivot not found.";
 				NL;
@@ -105,14 +111,24 @@ int main(int argc, char **argv)
 			(*target_select).used = true;
 			// add these values to trajectories
 			trajectory.push_back(std::make_pair(pivot,target));
+			current_rotation = (*target_select).radians + 0.00001;
 			pivot = target;
 		}
-
-
-	} // Trajectories loop
+		
+		// print the trajectory vector<pair>
+		for(auto x = trajectory.begin(); x != trajectory.end(); ++x) {
+			prt_point(&((*x).first), false);
+			prt_point(&((*x).second), true);
+			NL;
+		}
+		NL;
 	
 	std::cout << "trajectory has " << trajectory.size() << " entries";
 	NL;
+
+	} // Trajectories loop
+	
+
 	
 	// Animate/Display each trajectory
 	
