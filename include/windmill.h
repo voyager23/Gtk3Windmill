@@ -60,7 +60,7 @@
 	typedef std::vector<Point> Points;
 	typedef std::vector<Edge> Edges;
 	
-	typedef std::pair<Point, Edges> PointEdges;
+	typedef std::pair<Point, Edges*> PointEdges;
 	typedef std::vector<PointEdges> VectorPointEdge;
 	
 	typedef std::vector<std::pair<Point,Point>> Trajectory;

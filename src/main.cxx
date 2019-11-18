@@ -49,21 +49,21 @@ int main(int argc, char **argv)
 		for(auto to = points.begin(); to != points.end(); ++to) {
 			if(to == from) continue;
 			// construct a new edge
-			Edge e;
-			e.from = *from;
-			e.to = *to;
-			e.gradient = (to->y - from->y) / (to->x - from->x);
-			e.radians = atan(e.gradient);
-			if (e.radians < 0.0) e.radians += M_PI;
-			e.used = 0;
+			Edge *e = new Edge;
+			e->from = *from;
+			e->to = *to;
+			e->gradient = (to->y - from->y) / (to->x - from->x);
+			e->radians = atan(e->gradient);
+			if (e->radians < 0.0) e->radians += M_PI;
+			e->used = 0;
 
 			// add to edge vector ev
-			(*ev).push_back(e);
+			(*ev).push_back(*e);
 		}
 		// sort the vector on ascending radian values
 		std::sort((*ev).begin(), (*ev).end(), compare_radians);
-		// add edge vector to map using from as key and edge vector as value
-		PointEdges pair = std::make_pair(*from,*ev);
+		// add edge vector to main vector using from as key and edge vector as value
+		PointEdges pair = std::make_pair(*from,ev);
 		vect_point_edges.push_back(pair);
 	}
 	
@@ -74,35 +74,15 @@ int main(int argc, char **argv)
 	// Using each entry in vect_point_edges as starting point
 
 	for(auto start = vect_point_edges.begin(); start != vect_point_edges.end(); ++start) { // Trajectories loop
-				
-		// DEBUG SELECT (76,171)
-		// if (compare_points( (*start).first, test_point) == 0) continue;
-		// pivot = test_point;
-		// END DEBUG
 		
 		pivot = (*start).first;
 		
 //----------------------------------------------------------------------
 		// clear all 'used' values to false
 		for(auto x = vect_point_edges.begin(); x != vect_point_edges.end(); ++x) {
-			std::cout << "Clearing -used- values\t"; prt_point(&(x->first),true);
-			Edges ev = x->second;
-			for(auto y = ev.begin(); y != ev.end(); ++y) {
-				//prt_edge(&(*y),true);
+			Edges *ev = x->second;
+			for(auto y = ev->begin(); y != ev->end(); ++y) {
 				y->used = 0;
-				//prt_edge(&(*y),true);
-				//NL;
-			}
-		}
-		
-		// debug check of all edges
-		NL;
-		for(auto x = vect_point_edges.begin(); x != vect_point_edges.end(); ++x) {
-			std::cout << "Testing -used- values\t"; prt_point(&(x->first),true);
-			Edges ev = x->second;
-			for(auto y = ev.begin(); y != ev.end(); ++y) {
-				std::cout << y->used << std::endl;
-				assert(y->used == 0);
 			}
 		}
 //----------------------------------------------------------------------
@@ -120,17 +100,14 @@ int main(int argc, char **argv)
 				exit(1);
 			}
 			// test the last value of radians in the edges vector
-			target_select = (((*pivot_select).second).end()) - 1;
+			target_select = (((*pivot_select).second)->end()) - 1;
 			// reset current_rotation if necessary
 			if(current_rotation >= (*target_select).radians) current_rotation = 0.0;
 			
-			target_select = ((*pivot_select).second).begin();
+			target_select = ((*pivot_select).second)->begin();
 			while(current_rotation > (*target_select).radians) ++target_select;
 			
 			if((*target_select).used != 0) {
-				prt_point(&((*target_select).from), false);
-				prt_point(&((*target_select).to), false);
-				std::cout << " Used " << (*target_select).used << std::endl;
 				break; // breakout while loop
 			}
 			
@@ -155,8 +132,6 @@ int main(int argc, char **argv)
 	NL;
 
 	} // Trajectories loop
-	
-
 	
 	// Animate/Display each trajectory
 	

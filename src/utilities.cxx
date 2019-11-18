@@ -49,8 +49,8 @@ void prt_pair_vector(VectorPointEdge *ppv, bool nl) {
 	std::cout << "PairVector contains:" << std::endl;
 	for(auto x = (*ppv).begin(); x != (*ppv).end(); ++x) {
 		prt_point(&((*x).first), true);
-		Edges t = ((*x).second); //vector of Edge
-		for(auto y = t.begin(); y != t.end(); ++y)
+		Edges *t = ((*x).second); //vector of Edge
+		for(auto y = t->begin(); y != t->end(); ++y)
 			prt_edge(&(*y), true);
 		NL;
 	}
