@@ -23,6 +23,8 @@
 
 
 #include "../include/windmill.h"
+#define NDEBUG 
+#include <cassert>
 
 int main(int argc, char **argv)
 {
@@ -79,25 +81,35 @@ int main(int argc, char **argv)
 		// END DEBUG
 		
 		pivot = (*start).first;
-
+		
+//----------------------------------------------------------------------
 		// clear all 'used' values to false
 		for(auto x = vect_point_edges.begin(); x != vect_point_edges.end(); ++x) {
-			std::cout << "Clearing -used- values\n";
-			Edges ev = (*x).second;
+			std::cout << "Clearing -used- values\t"; prt_point(&(x->first),true);
+			Edges ev = x->second;
 			for(auto y = ev.begin(); y != ev.end(); ++y) {
 				//prt_edge(&(*y),true);
-				(*y).used = 0;
+				y->used = 0;
 				//prt_edge(&(*y),true);
 				//NL;
 			}
 		}
 		
+		// debug check of all edges
+		NL;
+		for(auto x = vect_point_edges.begin(); x != vect_point_edges.end(); ++x) {
+			std::cout << "Testing -used- values\t"; prt_point(&(x->first),true);
+			Edges ev = x->second;
+			for(auto y = ev.begin(); y != ev.end(); ++y) {
+				std::cout << y->used << std::endl;
+				assert(y->used == 0);
+			}
+		}
+//----------------------------------------------------------------------
+			
 		trajectory.clear();
 		current_rotation = 0.0;
 		
-		// debug check of all edges
-		
-
 		while(1) {
 			// find pivot
 			for(pivot_select = vect_point_edges.begin(); pivot_select != vect_point_edges.end(); ++pivot_select) 
@@ -114,6 +126,7 @@ int main(int argc, char **argv)
 			
 			target_select = ((*pivot_select).second).begin();
 			while(current_rotation > (*target_select).radians) ++target_select;
+			
 			if((*target_select).used != 0) {
 				prt_point(&((*target_select).from), false);
 				prt_point(&((*target_select).to), false);
