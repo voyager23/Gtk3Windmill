@@ -10,7 +10,7 @@ LIBS = `pkg-config --libs gtk+-3.0 gdk-3.0`
 
 TARGET = gtk3windmill
 
-OBJECTS = main.o utilities.o
+OBJECTS = main.o utilities.o construct_data_set.o
 HEADERS = windmill.h
 
 OBJS = $(addprefix ../build/, $(OBJECTS) )
@@ -27,4 +27,7 @@ $(TARGET) : $(OBJS) $(HDRS)
 	@$(CC) -c $(CFLAGS) $(LIBS) $< -o $(OUT)
 
 ../build/utilities.o : utilities.cxx ../include/windmill.h
+	@$(CC) -c $(CFLAGS) $(LIBS) $< -o $(OUT)
+	
+../build/construct_data_set.o : construct_data_set.cxx ../include/windmill.h
 	@$(CC) -c $(CFLAGS) $(LIBS) $< -o $(OUT)

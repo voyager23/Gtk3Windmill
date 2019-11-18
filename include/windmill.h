@@ -35,12 +35,12 @@
 	#include <vector>
 	#include <algorithm>
 	#include <utility>
-	
+	#include <iomanip>      // std::setw	
 	#include <gtk/gtk.h>
 	
 	#define NL {std::cout<<std::endl;}
 		
-	const int N = 5;	// Number of points
+	const int N = 8;	// Number of points
 	const int Nseg = N * (N-1) / 2;		// Number of pairs
 	const int XY = 512;	// Square window size - X & Y
 	const int PASSCOUNT = 128;
@@ -73,6 +73,8 @@
 	void set_static_points(std::vector<Point>&);
 	int compare_radians(Edge&,Edge&);
 	int compare_points(Point&,Point&);
+	
+	int construct_data_set(Points& points, int n_points, int window_size);
 
 #endif
 

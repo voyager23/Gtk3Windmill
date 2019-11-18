@@ -41,7 +41,8 @@ int main(int argc, char **argv)
 	Point pivot, target;
 	
 	// init the data
-	set_static_points(points);
+	// set_static_points(points);
+	construct_data_set(points, N, XY);
 	
 	// construct a vector of PairPointEdge
 	for(auto from = points.begin(); from != points.end(); ++from) {

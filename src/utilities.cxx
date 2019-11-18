@@ -26,7 +26,7 @@
 
 void prt_point(Point *pp, bool nl) {
 	// print contents of Point struct. Add NEWLINE if nl==true
-	std::cout << "(" << pp->x << "," << pp->y << ")";
+	std::cout << "(" << std::setw(3) << pp->x << "," << std::setw(3) << pp->y << ")";
 	(nl) ? std::cout << std::endl : std::cout << "\t"; 
 }
 
