@@ -35,6 +35,7 @@
 	#include <vector>
 	#include <algorithm>
 	#include <utility>
+	#include <iomanip>
 	
 	#include <gtk/gtk.h>
 	
@@ -70,9 +71,12 @@
 	void prt_edge(Edge*, bool);
 	void prt_pair_vector(VectorPointEdge*, bool);
 
-	void set_static_points(std::vector<Point>&);
+	void set_static_points(std::vector<Point>&); // small set of points for debugging
+	int construct_data_set(Points& points, int n_points, int window_size);
 	int compare_radians(Edge&,Edge&);
 	int compare_points(Point&,Point&);
+	void count_unique_points(int&, Trajectory&);
+
 
 #endif
 

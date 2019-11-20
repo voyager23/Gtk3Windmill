@@ -39,9 +39,11 @@ int main(int argc, char **argv)
 	
 	Point test_point = {176,28};	//debug value
 	Point pivot, target;
+	int unique_points;
 	
 	// init the data
-	set_static_points(points);
+	// set_static_points(points);
+	construct_data_set(points, N, XY);
 	
 	// construct a vector of PairPointEdge
 	for(auto from = points.begin(); from != points.end(); ++from) {
@@ -127,10 +129,11 @@ int main(int argc, char **argv)
 			NL;
 		}
 	
-	std::cout << "Trajectory has " << trajectory.size() << " entries";
-	NL;
-	NL;
-
+	std::cout << "Trajectory has " << trajectory.size() << " entries and used ";
+	count_unique_points(unique_points, trajectory);
+	std::cout << unique_points << " of " << N << " unique points.";
+	NL;NL;
+	
 	} // Trajectories loop
 	
 	// Animate/Display each trajectory
