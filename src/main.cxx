@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 	int trajectory_index = 0;
 	Point test_point = {176,28};	//debug value
 	Point pivot, target;
+	int unique_points;
 	
 	// init the data
 	// set_static_points(points);
