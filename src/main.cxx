@@ -139,8 +139,8 @@ int main(int argc, char **argv)
 
 	// Animate/Display each trajectory
 	
-	// Cleanup code - free memory
-	
+	// Cleanup code - OS should free memory used by the process
+
 	return 0;
 }
 
