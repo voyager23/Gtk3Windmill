@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 	
 	Trajectory trajectory;
 	double current_rotation;
-	
+	int trajectory_index = 0;
 	Point test_point = {176,28};	//debug value
 	Point pivot, target;
 	
@@ -74,6 +74,7 @@ int main(int argc, char **argv)
 	
 	// Using each entry in vect_point_edges as starting point
 
+	
 	for(auto start = vect_point_edges.begin(); start != vect_point_edges.end(); ++start) { // Trajectories loop
 		
 		pivot = (*start).first;
@@ -89,7 +90,8 @@ int main(int argc, char **argv)
 //----------------------------------------------------------------------
 			
 		trajectory.clear();
-		current_rotation = 0.0;
+		current_rotation = 0.0;		
+		std::cout << "===========================\n\n";
 		
 		while(1) {
 			// find pivot
@@ -128,12 +130,12 @@ int main(int argc, char **argv)
 			NL;
 		}
 	
-	std::cout << "Trajectory has " << trajectory.size() << " entries";
+	std::cout << "Trajectory " << ++trajectory_index << " has " << trajectory.size() << " entries, using data set of " << N << " points.";
 	NL;
 	NL;
 
 	} // Trajectories loop
-	
+
 	// Animate/Display each trajectory
 	
 	// Cleanup code - free memory

@@ -40,7 +40,7 @@
 	
 	#define NL {std::cout<<std::endl;}
 		
-	const int N = 8;	// Number of points
+	const int N = 5;	// Number of points
 	const int Nseg = N * (N-1) / 2;		// Number of pairs
 	const int XY = 512;	// Square window size - X & Y
 	const int PASSCOUNT = 128;
